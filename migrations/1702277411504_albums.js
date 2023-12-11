@@ -9,6 +9,10 @@ exports.up = (pgm) => {
       notNull: true,
       primaryKey: true,
     },
+    name: {
+      type: "VARCHAR(50)",
+      notNull: true,
+    },
     year: {
       type: "INTEGER",
       notNull: true,
