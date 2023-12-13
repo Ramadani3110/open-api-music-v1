@@ -51,8 +51,8 @@ class AlbumsHandler {
 
   async getAlbumsByIdHandler(request, h) {
     try {
-      const { id } = request.params;
-      const album = await this._service.getAlbumsById(id);
+      const { songsId } = request.params;
+      const album = await this._service.getAlbumsById(songsId);
       return {
         status: "success",
         message: "Albums ditemukan",
@@ -84,7 +84,6 @@ class AlbumsHandler {
       this._validator.validateAlbumsPayload(request.payload);
       const { id } = request.params;
       this._service.editAlbumsById(id, request.payload);
-      console.log(request.payload);
       return {
         status: "success",
         message: "Albums berhasil diubah",
