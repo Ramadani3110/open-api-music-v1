@@ -33,7 +33,6 @@ class AlbumsHandler {
       response.code(201);
       return response;
     } catch (error) {
-      console.log("Error in putAlbumsByIdHandler:", error);
       if (error instanceof ClientError) {
         const response = h.response({
           status: "fail",
@@ -47,7 +46,6 @@ class AlbumsHandler {
         message: "Maaf terjadi kesalahan di server kami",
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
@@ -79,7 +77,6 @@ class AlbumsHandler {
         message: "Maaf terjadi kesalahan di server kami",
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
@@ -107,7 +104,6 @@ class AlbumsHandler {
         message: "Maaf terjadi kesalahan di server kami",
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
@@ -134,7 +130,6 @@ class AlbumsHandler {
         message: "Maaf terjadi kesalahan di server kami",
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }

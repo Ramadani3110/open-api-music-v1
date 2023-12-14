@@ -52,7 +52,6 @@ class SongsHandler {
         status: "error",
         message: "Maaf terjadi kesalahan di server kami",
       });
-      console.log(error);
       response.code(500);
       return response;
     }
@@ -60,7 +59,8 @@ class SongsHandler {
 
   async getSongsHandler(request, h) {
     try {
-      const songs = await this._service.getAllSongs();
+      const { title, performer } = request.query;
+      const songs = await this._service.getAllSongs(title, performer);
       return {
         status: "success",
         message: "Berhasil menampilkan semua lagu",
@@ -141,7 +141,6 @@ class SongsHandler {
         message: "Maad terjadi kesalahan di server kami",
       });
       response.code(500);
-      console.error(error);
       return response;
     }
   }
