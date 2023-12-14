@@ -4,7 +4,7 @@ require("dotenv").config();
 const Hapi = require("@hapi/hapi");
 const albums = require("./api/albums");
 const songs = require("./api/songs");
-const AlbumsService = require("./service/inMemory/AlbumsService");
+const AlbumsService = require("./service/postgres/AlbumsService");
 const SongsService = require("./service/inMemory/SongsService");
 const AlbumsValidator = require("./validator/music/albums");
 const SongsValidator = require("./validator/music/songs");
@@ -38,6 +38,7 @@ const init = async () => {
       },
     },
   ]);
+
   await server.start();
   console.log(`Server berjalan di ${server.info.uri}`);
 };

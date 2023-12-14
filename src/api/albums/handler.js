@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -5,6 +6,7 @@
 /* eslint-disable no-unused-vars */
 const autoBind = require("auto-bind");
 const ClientError = require("../../exceptions/ClientError");
+const NotFoundError = require("../../exceptions/NotFoundError");
 
 class AlbumsHandler {
   constructor(service, validator) {
@@ -31,6 +33,7 @@ class AlbumsHandler {
       response.code(201);
       return response;
     } catch (error) {
+      console.log("Error in putAlbumsByIdHandler:", error);
       if (error instanceof ClientError) {
         const response = h.response({
           status: "fail",
@@ -51,8 +54,8 @@ class AlbumsHandler {
 
   async getAlbumsByIdHandler(request, h) {
     try {
-      const { songsId } = request.params;
-      const album = await this._service.getAlbumsById(songsId);
+      const { id } = request.params;
+      const album = await this._service.getAlbumsById(id);
       return {
         status: "success",
         message: "Albums ditemukan",
@@ -79,11 +82,11 @@ class AlbumsHandler {
     }
   }
 
-  putAlbumsByIdHandler(request, h) {
+  async putAlbumsByIdHandler(request, h) {
     try {
       this._validator.validateAlbumsPayload(request.payload);
       const { id } = request.params;
-      this._service.editAlbumsById(id, request.payload);
+      await this._service.editAlbumsById(id, request.payload);
       return {
         status: "success",
         message: "Albums berhasil diubah",
@@ -97,7 +100,6 @@ class AlbumsHandler {
         response.code(error.statusCode);
         return response;
       }
-
       const response = h.response({
         status: "error",
         message: "Maaf terjadi kesalahan di server kami",
@@ -108,10 +110,10 @@ class AlbumsHandler {
     }
   }
 
-  deleteAlbumsByIdHandler(request, h) {
+  async deleteAlbumsByIdHandler(request, h) {
     try {
       const { id } = request.params;
-      this._service.deleteAlbumsById(id);
+      await this._service.deleteAlbumsById(id);
       return {
         status: "success",
         message: "Berhasil menghapus albums",
